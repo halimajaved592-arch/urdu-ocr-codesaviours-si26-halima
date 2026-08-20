@@ -1,208 +1,120 @@
-# Urdu OCR Project | Code Saviours SI-26 | Halima Javed
+# Urdu OCR — Code Saviours SI-26
 
-This repository contains my work for the ML/AI SI-26 Urdu OCR Internship project at Code Saviours.
+An OCR application that takes an Urdu text image as input and extracts the text using a TrOCR-based deep learning model.
 
-## Week 1 – Environment Setup & Dataset Collection
+## Why This Matters
 
-### Tasks Completed
+Urdu OCR is challenging because Urdu uses a connected Nastaliq writing style and has fewer high-quality OCR resources than English. This project explores how deep learning and image-to-text models can be used to automatically convert Urdu text from images into editable Unicode text. The project was developed as part of the Code Saviours SI-26 Machine Learning Internship.
 
-* Set up the development environment.
-* Created the GitHub repository.
-* Set up Google Colab.
-* Collected Urdu OCR image data.
-* Created the initial dataset and labels.
+## Live Demo
 
-## Research Summary
+🚀 **Hugging Face Space:**  
+https://huggingface.co/spaces/halimajaved592/urdu-ocr
 
-OCR (Optical Character Recognition) is a technology that converts text from images into editable digital text. Urdu OCR is more challenging than English OCR because Urdu is written from right to left, characters change shape depending on their position, and many letters are distinguished only by dots. Urdu OCR has many practical applications, including digitizing books, newspapers, historical records, and government documents.
+The demo provides a simple interface where users can upload an Urdu image and receive extracted text.
 
-## Week 2 – Image Preprocessing & OCR Testing
+## How It Works
 
-### Tasks Completed
+1. The user uploads an image containing Urdu text.
+2. The image is processed and converted into the format required by the OCR model.
+3. A TrOCR-based Vision Encoder-Decoder model analyzes the image and generates text.
+4. The generated tokens are decoded into readable Urdu Unicode text and displayed in the Gradio interface.
 
-* Preprocessed Urdu images using OpenCV.
-* Converted images to grayscale.
-* Applied Gaussian blur for noise reduction.
-* Applied thresholding to improve text visibility.
-* Saved processed images in `data/processed/`.
+## Dataset
 
-### OCR Testing
+The project dataset contains **200 Urdu image-text pairs**.
 
-* Tested the processed images using Tesseract OCR with pytesseract.
-* Compared the OCR output with the original Urdu text.
+- **Total images:** 200
+- **Training images:** 160
+- **Testing images:** 40
+- **Format:** PNG/JPG images with corresponding Urdu text labels
+- **Labels file:** `labels.csv`
+- **Columns:** `image`, `text`
 
-### Gap Analysis
+Example:
 
-Tesseract showed poor performance on Urdu text because Urdu uses a cursive script with connected characters. Many words were recognized incorrectly or not recognized at all, demonstrating the need for a specialized Urdu OCR model.
+| Image | Text |
+|---|---|
+| `data/processed/0.png` | پشاور،بنوں (نمائندہ جنگ،اے ایف پی)... |
+| `data/processed/1.png` | اسکے ساتھ ملحقہ علاقے کے عوام نے بجلی و گیس... |
 
-## Week 3 – Dataset Preparation
+## Results
 
-### Tasks Completed
+The project was evaluated on a held-out test set of **40 images**.
 
-* Expanded the Urdu OCR dataset.
-* Organized image and label files.
-* Loaded the dataset using Python.
-* Created a custom dataset/data loader.
-* Prepared images for model training.
-* Split the dataset into training and testing sets.
+The current model successfully completes the complete OCR pipeline — image preprocessing, Urdu tokenization, model generation, and text decoding — but the current 200-image training dataset is not large enough to achieve reliable Urdu OCR accuracy.
 
-The prepared dataset contained image samples paired with their corresponding Urdu text labels.
+Therefore, **no artificial accuracy or F1 score is reported**.
 
-## Week 4 – TrOCR Research & Implementation
+During testing, the model produced Urdu-character output but still made substantial recognition errors. This limitation was identified during evaluation and documented as part of the project.
 
-### Tasks Completed
-
-* Researched Transformer-based OCR models.
-* Studied the Hugging Face TrOCR model architecture.
-* Selected TrOCR as the main OCR approach.
-* Prepared image-text pairs for TrOCR.
-* Used a TrOCR processor for image preprocessing and text tokenization.
-* Tested the model on Urdu OCR data.
-
-### Why TrOCR?
-
-TrOCR combines a Vision Transformer-based image encoder with a Transformer-based text decoder. It is designed for image-to-text recognition and provides a suitable foundation for fine-tuning on custom OCR datasets.
-
-## Week 5 – Model Training Preparation
-
-### Tasks Completed
-
-* Prepared the training dataset for TrOCR.
-* Converted images into the required format.
-* Prepared corresponding Urdu text labels.
-* Created training and testing datasets.
-* Configured the processor and model.
-* Prepared the training pipeline using Hugging Face Transformers and PyTorch.
-
-### Dataset
-
-The dataset consists of Urdu text images and their corresponding ground-truth transcriptions.
-
-The training pipeline was designed to learn the relationship between an input Urdu image and its correct text transcription.
-
-## Week 6 – Model Training & Testing
-
-### Tasks Completed
-
-* Continued the TrOCR training pipeline.
-* Used Google Colab for model training.
-* Utilized GPU acceleration where available.
-* Tested the trained model on unseen test images.
-* Compared predicted OCR text with the ground-truth text.
-
-The model was evaluated using test samples that were not used during training.
-
-## Week 7 – Model Evaluation
-
-### Evaluation
-
-The trained OCR model was evaluated by comparing the predicted Urdu text with the ground-truth labels.
-
-Important OCR evaluation measures include:
-
-* Character Error Rate (CER)
-* Word Error Rate (WER)
-* Exact Match
-* Accuracy
-
-These metrics help determine how accurately the model recognizes Urdu text from images.
-
-### Evaluation Observation
-
-The initial TrOCR setup showed limitations when recognizing Urdu because the original pretrained model is not specifically optimized for Urdu script. This highlighted the importance of suitable Urdu training data, preprocessing, and fine-tuning.
-
-## Week 8 – Final Testing & Documentation
-
-### Tasks Completed
-
-* Finalized the dataset preparation pipeline.
-* Tested the OCR model on sample images.
-* Compared predictions with ground-truth Urdu text.
-* Reviewed model performance.
-* Documented the project workflow and findings.
-* Organized the GitHub repository.
-* Prepared the project for final demonstration.
-
-### Final Project Workflow
-
-```text
-Urdu Image
-    ↓
-Image Preprocessing
-    ↓
-Dataset + Ground Truth Text
-    ↓
-TrOCR Processor
-    ↓
-TrOCR Model
-    ↓
-Model Training / Fine-tuning
-    ↓
-Test Image
-    ↓
-Predicted Urdu Text
-    ↓
-Evaluation
-```
+For comparison, published Urdu TrOCR work also reports that dataset size is a major limitation for Urdu OCR performance. One SI-26 Urdu TrOCR model reports a CER of 0.52 on its evaluation set and notes that larger datasets are needed for substantially better accuracy.  
+Source: https://huggingface.co/qandeelasim13/urdu-ocr-trocr-si26
 
 ## Technologies Used
 
-* Python
-* Google Colab
-* PyTorch
-* Hugging Face Transformers
-* TrOCR
-* OpenCV
-* Tesseract OCR
-* pytesseract
-* GitHub
+- Python
+- PyTorch
+- Hugging Face Transformers
+- TrOCR
+- Vision Encoder-Decoder
+- Google Colab
+- Tesla T4 GPU
+- Gradio
+- Hugging Face Spaces
+- Google Drive
 
 ## Project Structure
 
 ```text
-urdu-ocr-codesaviours-si26-halima/
+urdu-ocr/
 │
 ├── data/
-│   ├── raw/
 │   ├── processed/
+│   │   └── Urdu images
 │   └── labels.csv
 │
 ├── notebooks/
+│   └── Urdu OCR training and evaluation notebook
 │
-├── SI26-Week*.ipynb
-│
-├── README.md
-│
-└── requirements.txt
-```
+├── app.py
+├── requirements.txt
+└── README.md
+How to Run Locally
 
-## Key Learning Outcomes
+Clone the repository:
 
-Through this project, I learned:
+git clone https://github.com/halimajaved592-arch/urdu-ocr-codesaviours-si26-halima.git
+cd urdu-ocr-codesaviours-si26-halima
 
-* Fundamentals of Optical Character Recognition.
-* Challenges involved in Urdu OCR.
-* Image preprocessing techniques using OpenCV.
-* Tesseract OCR testing.
-* Dataset preparation for deep learning.
-* Transformer-based OCR using TrOCR.
-* Hugging Face Transformers and processors.
-* Model training and evaluation.
-* Working with GPU environments in Google Colab.
-* Using GitHub for project documentation and version control.
+Install the required packages:
 
-## Future Improvements
+pip install torch torchvision
+pip install transformers
+pip install sentencepiece
+pip install pillow
+pip install gradio
 
-* Increase the size and diversity of the Urdu OCR dataset.
-* Fine-tune a multilingual or Urdu-specific OCR model.
-* Improve Urdu character and word recognition.
-* Evaluate the model using CER and WER.
-* Deploy the trained OCR model as a web application.
-* Test the system on real-world Urdu documents.
+Run the application:
 
-## Author
+python app.py
 
-**Halima Javed**
+The Gradio interface will open locally in your browser.
 
-ML/AI Intern — Code Saviours SI-26
-SI26-ML-HJ-032
+Hugging Face Model
+
+The trained model repository is available here:
+
+https://huggingface.co/halimajaved592/urdu-ocr-trocr
+
+Future Improvements
+Increase the size and diversity of the Urdu OCR dataset.
+Add more Nastaliq fonts and writing styles.
+Include multi-line Urdu documents.
+Apply stronger image preprocessing and augmentation.
+Fine-tune the model using a larger Urdu OCR dataset.
+Evaluate using Character Error Rate (CER) and Word Error Rate (WER).
+Improve the live demo's OCR accuracy and robustness.
+Built By
+
+Halima Javed | Code Saviours SI-26 | 2026
