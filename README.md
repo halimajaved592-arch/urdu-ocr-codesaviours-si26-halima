@@ -10,6 +10,7 @@ Urdu OCR is challenging because Urdu uses a connected Nastaliq writing style and
 
 🚀 **Hugging Face Space:**  
 https://huggingface.co/spaces/halimajaved592/urdu-ocr
+
 ## Loom Link
 https://www.loom.com/share/7c8778a81c0441c7b85842053daed63e
 
